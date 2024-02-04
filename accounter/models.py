@@ -8,18 +8,27 @@ PAYMENT_METHOD_CHOICES = [
     ('credit', 'Credit'),
 ]
 
-class Category(models.Model):
+class GeneralModel(models.Model):
+    """
+    An abstract base class model that provides self-updating
+    ``created`` and ``modified`` fields.
+    """
+    created_at = models.DateTimeField(default=timezone.now)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name='created_%(class)s')
+    modified_at = models.DateTimeField(auto_now=True)
+    modified_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='modified_%(class)s')
+
+    class Meta:
+        abstract = True
+
+class Category(GeneralModel):
     name = models.CharField(max_length=100)
     notes = models.TextField(null=True, blank=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(default=timezone.now)
-    modified_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='modified_categories')
-    modified_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
 
-class Property(models.Model):
+class Property(GeneralModel):
     name = models.CharField(max_length=100)
     TYPE_OF_PROPERTY = [
         ('single family residence', 'Single Family Residence'),
@@ -38,15 +47,11 @@ class Property(models.Model):
     country = models.CharField(max_length=100)
     zipcode = models.CharField(max_length=10)
     notes = models.TextField(null=True, blank=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(default=timezone.now)
-    modified_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='modified_properties')
-    modified_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
     
-class Contact(models.Model):
+class Contact(GeneralModel):
     name = models.CharField(max_length=100)
     email = models.EmailField(max_length=100, null=True, blank=True)
     phone = models.CharField(max_length=20, null=True, blank=True)
@@ -55,15 +60,11 @@ class Contact(models.Model):
     state = models.CharField(max_length=100, null=True, blank=True)
     company = models.CharField(max_length=100, null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(default=timezone.now)
-    modified_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='modified_contacts')
-    modified_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
     
-class Expense(models.Model):
+class Expense(GeneralModel):
     name = models.CharField(max_length=100)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     note = models.TextField(null=True, blank=True)
@@ -73,16 +74,12 @@ class Expense(models.Model):
     contact = models.ForeignKey(Contact, on_delete=models.SET_NULL, null=True, blank=True)
     payment_date = models.DateField(null=True, blank=True)
     payment_method = models.CharField(max_length=100, null=True, blank=True, choices=PAYMENT_METHOD_CHOICES)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(default=timezone.now)
-    modified_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='modified_expenses')
-    modified_at = models.DateTimeField(auto_now=True)
     receipts = models.FileField(upload_to='receipts/', null=True, blank=True)
 
     def __str__(self):
         return self.name
     
-class Vehicle(models.Model):
+class Vehicle(GeneralModel):
     name = models.CharField(max_length=100)
     business_use = models.BooleanField(default=False)
     make = models.CharField(max_length=100, null=True, blank=True)
@@ -92,15 +89,11 @@ class Vehicle(models.Model):
     vin = models.CharField(max_length=100, null=True, blank=True)
     license_plate = models.CharField(max_length=100, blank=True, null=True)
     notes = models.TextField(null=True, blank=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(default=timezone.now)
-    modified_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='modified_vehicles')
-    modified_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
 
-class Mile(models.Model):
+class Mile(GeneralModel):
     name = models.CharField(max_length=100)
     purpose = models.CharField(max_length=255)
     date = models.DateField()
@@ -109,15 +102,11 @@ class Mile(models.Model):
     source_location = models.CharField(max_length=255)
     destination_location = models.CharField(max_length=255)
     notes = models.TextField(null=True, blank=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(default=timezone.now)
-    modified_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='modified_miles')
-    modified_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
 
-class Income(models.Model):
+class Income(GeneralModel):
     name = models.CharField(max_length=100)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     note = models.TextField(null=True, blank=True)
@@ -126,10 +115,6 @@ class Income(models.Model):
     date = models.DateField()
     payment_date = models.DateField(null=True, blank=True)
     payment_method = models.CharField(max_length=100, null=True, blank=True, choices=PAYMENT_METHOD_CHOICES)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(default=timezone.now)
-    modified_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='modified_incomes')
-    modified_at = models.DateTimeField(auto_now=True)
     receipts = models.FileField(upload_to='receipts/', null=True, blank=True)
 
     def __str__(self):
