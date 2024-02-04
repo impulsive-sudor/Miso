@@ -1,5 +1,7 @@
 # Miso
 
+![Banner Image](./842269_Generate%20a%20banner%20image%20for%20a%20website%20for%20its%20bran_xl-1024-v1-0.png)
+
 ## Description
 
 A expense tracker for real estate properties
