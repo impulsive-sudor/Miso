@@ -1,8 +1,8 @@
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login
 from django.shortcuts import render, redirect
-from django.views.generic import ListView
-from .models import Company
+from .forms import PropertyForm
+from .models import Property, Company
 
 def login_view(request):
     if request.method == 'POST':
@@ -17,8 +17,19 @@ def login_view(request):
 
 def company_home(request):
     if request.user.is_authenticated:
-        return render(request, 'company_home.html')
+        company = Company.objects.get(user=request.user)  # get the company of the logged-in user
+        properties = Property.objects.filter(company=company)  # get properties of this company
+        return render(request, 'company_home.html', {'properties': properties})
     else:
         return redirect('login')
 
-# show all data in the company model
+def property_create_view(request):
+    if request.method == 'POST':
+        form = PropertyForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('company_home')
+    else:
+        form = PropertyForm()
+    return render(request, 'property_form.html', {'form': form})
+    
