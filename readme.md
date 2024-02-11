@@ -11,7 +11,19 @@ A expense tracker for real estate properties
 * Install dependicies in the requirements.txt file
 
 * Setup the ```.env``` file with your secret key. Should look something like this:
-  * ```SECRET_KEY="mysecretkey"```
+
+  ```text
+    SECRET_KEY="mysecretkey"
+    POSTGRES_DB="postgres"
+    POSTGRES_USER="postgres"
+    POSTGRES_PASSWORD="postgres"
+  ```
+
+* Create a superuser to login to the admin console.
+
+  ```python
+  python manage.py createsuperuser
+  ```
 
 ## Usage
 

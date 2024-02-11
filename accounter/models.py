@@ -14,9 +14,9 @@ class GeneralModel(models.Model):
     ``created`` and ``modified`` fields.
     """
     created_at = models.DateTimeField(default=timezone.now)
-    created_by = models.ForeignKey(User, default=1, on_delete=models.CASCADE, null=True, blank=True, related_name='created_%(class)s')
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name='created_%(class)s')
     modified_at = models.DateTimeField(auto_now=True)
-    modified_by = models.ForeignKey(User, default=1, on_delete=models.SET_NULL, null=True, blank=True, related_name='modified_%(class)s')
+    modified_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='modified_%(class)s')
 
     class Meta:
         abstract = True
