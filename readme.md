@@ -25,6 +25,8 @@ A expense tracker for real estate properties
   python manage.py createsuperuser
   ```
 
+* You might need to run ```docker-compose up``` twice to get the connection working to the DB
+
 ## Usage
 
 This project is in very early stages, so please be mindful of the constant changes I will be doing.
