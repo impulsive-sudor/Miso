@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Expenses</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-200 py-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col">
+            <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                    <h2 class="mt-10 text-2xl font-bold text-gray-900">Expenses</h2>
+                    <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <a href="?order_by=name" class="text-gray-500">Name</a>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <a href="?order_by=amount" class="text-gray-500">Amount</a>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <a href="?order_by=category" class="text-gray-500">Category</a>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <a href="?order_by=property" class="text-gray-500">Property</a>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <a href="?order_by=contact" class="text-gray-500">Contact</a>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <a href="?order_by=payment_date" class="text-gray-500">Payment Date</a>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <a href="?order_by=payment_method" class="text-gray-500">Payment Method</a>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <a href="?order_by=note" class="text-gray-500">Notes</a>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <a href="?order_by=receipts" class="text-gray-500">Receipts</a>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                {% for expense in expense_page_obj %}
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ expense.name }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ expense.amount }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ expense.category }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ expense.property }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ expense.contact }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ expense.payment_date }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ expense.payment_method }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <textarea id="note" name="notes" rows="4" readonly class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">{{ expense.note }}</textarea>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ expense.receipts }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mt-10">
+                        <h2 class="mt-10 text-2xl font-bold text-gray-900">Income</h2>
+                        <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            <a href="?order_by=name" class="text-gray-500">Name</a>
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            <a href="?order_by=amount" class="text-gray-500">Amount</a>
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            <a href="?order_by=property" class="text-gray-500">Property</a>
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            <a href="?order_by=contact" class="text-gray-500">Contact</a>
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            <a href="?order_by=payment_date" class="text-gray-500">Payment Date</a>
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            <a href="?order_by=payment_method" class="text-gray-500">Payment Method</a>
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            <a href="?order_by=note" class="text-gray-500">notes</a>
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            <a href="?order_by=receipts" class="text-gray-500">Receipt</a>
+                                        </th>
+
+                                        <!-- More headers as needed -->
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    {% for income in income_page_obj %}
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ income.name }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ income.amount }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ income.property }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ income.contact }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ income.payment_date }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ income.payment_method }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <textarea id="note" name="notes" rows="4" readonly class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">{{ income.note }}</textarea>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ income.receipts }}</td>
+
+                                        <!-- More data as needed -->
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="mt-10">
+                        <h2 class="mt-10 text-2xl font-bold text-gray-900">Trips</h2>
+                        <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            <a href="?order_by=name" class="text-gray-500">Name</a>
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            <a href="?order_by=distance" class="text-gray-500">Distance</a>
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            <a href="?order_by=purpose" class="text-gray-500">Purpose</a>
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            <a href="?order_by=vehicle" class="text-gray-500">Vehicle</a>
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            <a href="?order_by=date" class="text-gray-500">Date</a>
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            <a href="?order_by=source_location" class="text-gray-500">Starting Location</a>
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            <a href="?order_by=destination_location" class="text-gray-500">Ending Location</a>
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            <a href="?order_by=note" class="text-gray-500">notes</a>
+                                        </th>
+
+                                        <!-- More headers as needed -->
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    {% for mile in mile_page_obj %}
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ mile.name }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ mile.distance }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ mile.purpose }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ mile.vehicle }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ mile.date }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ mile.source_location }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ mile.destination_location }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <textarea id="note" name="notes" rows="4" readonly class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">{{ mile.note }}</textarea>
+                                        </td>
+
+                                        <!-- More data as needed -->
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

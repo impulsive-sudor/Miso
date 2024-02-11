@@ -1,35 +1,19 @@
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import login
-from django.shortcuts import render, redirect
-from .forms import PropertyForm
-from .models import Property, Company
+from django.core.paginator import Paginator
+from django.shortcuts import render
+from .models import PropertyExpense, Income, Mile
 
-def login_view(request):
-    if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            return redirect('company_home.html')
-    else:
-        form = AuthenticationForm()
-    return render(request, 'login.html', {'form': form})
+def expenses(request):
+    expense = PropertyExpense.objects.all()
+    income = Income.objects.all()
+    mile = Mile.objects.all()
 
-def company_home(request):
-    if request.user.is_authenticated:
-        company = Company.objects.get(user=request.user)  # get the company of the logged-in user
-        properties = Property.objects.filter(company=company)  # get properties of this company
-        return render(request, 'company_home.html', {'properties': properties})
-    else:
-        return redirect('login')
+    expense_paginator = Paginator(expense, 10)
+    income_paginator = Paginator(income, 10)
+    mile_paginator = Paginator(mile, 10)
 
-def property_create_view(request):
-    if request.method == 'POST':
-        form = PropertyForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('company_home')
-    else:
-        form = PropertyForm()
-    return render(request, 'property_form.html', {'form': form})
-    
+    page_number = request.GET.get('page')
+    expense_page_obj = expense_paginator.get_page(page_number)
+    income_page_obj = income_paginator.get_page(page_number)
+    mile_page_obj = mile_paginator.get_page(page_number)
+
+    return render(request, 'expenses.html', {'expense_page_obj': expense_page_obj, 'income_page_obj': income_page_obj, 'mile_page_obj': mile_page_obj})
