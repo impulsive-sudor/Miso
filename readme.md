@@ -15,7 +15,9 @@ A expense tracker for real estate properties
 
 ## Usage
 
-Instructions on how to use your project.
+This project is in very early stages, so please be mindful of the constant changes I will be doing.
+
+Currently there is no forms built into the website. All the website does today is display the results from the DB. To submit data, I'm currently using the Django admin interface. This isn't ideal but it's a starting point for me to get up and running.
 
 ## Contributing
 
